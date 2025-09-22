@@ -17,7 +17,7 @@ Before scanning for open ports, I first needed to identify which hosts were aliv
 
 **Steps Taken:**
 1. Checked my Kali VM’s IP address:
-$ ifconfig
+$ ifconfig <br/>
 inet 10.0.2.15  netmask 255.255.255.0
 From this, we determined 10.0.2.0/24, which includes all addresses from 10.0.2.1 to 10.0.2.254.
 
