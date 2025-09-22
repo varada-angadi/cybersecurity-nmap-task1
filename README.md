@@ -20,28 +20,37 @@ $ ifconfig <br/>
 inet 10.0.2.15  netmask 255.255.255.0 <br/>
 From this, we determined 10.0.2.0/24, which includes all addresses from 10.0.2.1 to 10.0.2.254
 
-2. Performed a TCP SYN scan on the subnet using Nmap:
-$ sudo nmap -sS 10.0.2.0/24 <br/>
--sS is a stealthy SYN scan that identifies live hosts and open ports
+2. Performed a TCP SYN scan on the subnet using Nmap: <br/>
+$ nmap -sS 10.0.2.0/24 <br/>
+- sS is a stealthy SYN scan that identifies live hosts and open ports
 
-3. Target machine identified:
+3. Target machine identified: <br/>
 Target machine Metasploitable 2 was identified at 10.0.2.4 <br/>
 Nmap reported which ports were open helps for next reconnaissance steps
 
-4. Saved Output:
+4. Saved Output: <br/>
 $ sudo nmap -sS -sV 10.0.2.4 -oN scan_results.txt <br/>
 This file is included in the repository for review
 
-5. To gather extra information, I ran Nmap default NSE scripts:
-$ sudo nmap -sS -sV --script=default 10.0.2.4
-- FTP allows anonymous login
-- Samba exposes OS info and security mode
-- HTTP server headers detected
-Full NSE output is saved in scan_full_nse.txt for reference.
+5. To gather extra information, I ran Nmap default NSE scripts: <br/>
+$ sudo nmap -sS -sV --script=default 10.0.2.4 <br/>
+- FTP allows anonymous login <br/>
+- Samba exposes OS info and security mode <br/>
+- HTTP server headers detected <br/>
+Full NSE output is saved in scan_full_nse.txt for reference 
 
-6. Packet Capture & Wireshark Analysis
-$ sudo tcpdump -i eth0 -w packet_capture.pcap
-Analysis with Wireshark, Opened the capture and follow TCP streams for services like FTP.
+6. Packet Capture & Wireshark Analysis <br/>
+$ sudo tcpdump -i eth0 -w packet_capture.pcap <br/>
+Analysis with Wireshark, Opened the capture and follow TCP streams for services like FTP <br/>
+
+Observations: <br/>
+Credentials are sent in plain text → easy for an attacker to sniff <br/>
+Commands like SYST and STAT reveal system type and server status <br/>
+Confirms that FTP service is live and accessible from the network <br/>
+
+Security Implication: <br/>
+FTP without encryption exposes sensitive information <br/>
+Real networks should use SFTP or FTPS to protect credentials <br/>
 
 ## Some of the important findings
 | Port | Service | Notes |
@@ -58,6 +67,14 @@ Analysis with Wireshark, Opened the capture and follow TCP streams for services 
 | 5432 | PostgreSQL | Database server, SSL info available |
 | 5900 | VNC     | Remote desktop access |
 | 8180 | HTTP    | Apache Tomcat 5.5 |
+
+## Potential Security Risks
+- FTP (Port 21): Anonymous login allowed → anyone can access files.
+- Telnet (Port 23): Transmits data in plain text → credentials can be sniffed.
+- Samba (Ports 139/445): Message signing disabled → susceptible to tampering or spoofing.
+- Database ports (3306, 5432): Open without network restrictions → potential for unauthorized access.
+- VNC (Port 5900): Remote access could be brute-forced if weak authentication.
+- HTTP / Tomcat (Ports 80/8180): Server headers reveal software version → attackers can look up vulnerabilities.
 
 ## Skills Demonstrated
 - Network reconnaissance & IP range discovery
