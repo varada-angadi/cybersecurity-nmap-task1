@@ -13,15 +13,25 @@ The goal of this task was to explore a target machine on my local lab network, d
 - **Wireshark and tcpdump** – to capture network traffic and to get to know what’s happening behind the scenes
 
 ## Discovering IP Range & Hosts
-Before scanning for open ports, I first needed to identify which hosts were alive in my lab network.
+Before scanning for open ports, I first needed to identify which hosts were alive in my lab network
 
 **Steps Taken:**
 1. Checked my Kali VM’s IP address: <br/>
 $ ifconfig <br/>
 inet 10.0.2.15  netmask 255.255.255.0 <br/>
-From this, we determined 10.0.2.0/24, which includes all addresses from 10.0.2.1 to 10.0.2.254.
+From this, we determined 10.0.2.0/24, which includes all addresses from 10.0.2.1 to 10.0.2.254
 
 2. Performed a TCP SYN scan on the subnet using Nmap:
+$ sudo nmap -sS 10.0.2.0/24 <br/>
+-sS is a stealthy SYN scan that identifies live hosts and open ports
+
+3. Target machine identified:
+Target machine Metasploitable 2 was identified at 10.0.2.4 <br/>
+Nmap reported which ports were open helps for next reconnaissance steps
+
+4. Saved Output:
+$ sudo nmap -sS 10.0.2.0/24 -oN scan_results.txt <br/>
+This file is included in the repository for review
 
 ## Summary of Findings
 | Port | Service | Notes |
