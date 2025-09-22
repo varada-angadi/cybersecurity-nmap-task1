@@ -16,9 +16,9 @@ The goal of this task was to explore a target machine on my local lab network, d
 Before scanning for open ports, I first needed to identify which hosts were alive in my lab network.
 
 **Steps Taken:**
-1. Checked my Kali VM’s IP address:
+1. Checked my Kali VM’s IP address: <br/>
 $ ifconfig <br/>
-inet 10.0.2.15  netmask 255.255.255.0
+inet 10.0.2.15  netmask 255.255.255.0 <br/>
 From this, we determined 10.0.2.0/24, which includes all addresses from 10.0.2.1 to 10.0.2.254.
 
 2. Performed a TCP SYN scan on the subnet using Nmap:
