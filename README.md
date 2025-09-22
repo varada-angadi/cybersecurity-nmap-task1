@@ -14,8 +14,7 @@ The goal of this task was to explore a target machine on my local lab network, d
 
 ## Discovering IP Range & Hosts
 Before scanning for open ports, I first needed to identify which hosts were alive in my lab network
-
-**Steps Taken:**
+**Steps:**
 1. Checked my Kali VM’s IP address: <br/>
 $ ifconfig <br/>
 inet 10.0.2.15  netmask 255.255.255.0 <br/>
@@ -30,10 +29,21 @@ Target machine Metasploitable 2 was identified at 10.0.2.4 <br/>
 Nmap reported which ports were open helps for next reconnaissance steps
 
 4. Saved Output:
-$ sudo nmap -sS 10.0.2.0/24 -oN scan_results.txt <br/>
+$ sudo nmap -sS -sV 10.0.2.4 -oN scan_results.txt <br/>
 This file is included in the repository for review
 
-## Summary of Findings
+5. To gather extra information, I ran Nmap default NSE scripts:
+$ sudo nmap -sS -sV --script=default 10.0.2.4
+- FTP allows anonymous login
+- Samba exposes OS info and security mode
+- HTTP server headers detected
+Full NSE output is saved in scan_full_nse.txt for reference.
+
+6. Packet Capture & Wireshark Analysis
+$ sudo tcpdump -i eth0 -w packet_capture.pcap
+Analysis with Wireshark, Opened the capture and follow TCP streams for services like FTP.
+
+## Some of the important findings
 | Port | Service | Notes |
 |------|---------|-------|
 | 21   | FTP     | vsFTPd 2.3.4, anonymous login allowed |
@@ -49,22 +59,15 @@ This file is included in the repository for review
 | 5900 | VNC     | Remote desktop access |
 | 8180 | HTTP    | Apache Tomcat 5.5 |
 
-### Key Observations
-- Multiple open ports expose services with known vulnerabilities (lab environment).  
-- FTP allows anonymous login → example of a real-world security risk.  
-- Samba message signing is disabled, exposing potential attack vectors.  
-- Packet capture confirms SYN → SYN-ACK handshake and service banners for open ports.  
+## Skills Demonstrated
+- Network reconnaissance & IP range discovery
+- TCP SYN scanning & service detection
+- NSE script usage for additional service info
+- Packet capture & analysis (Wireshark/tcpdump)
+- Understanding security risks of open ports and exposed services
 
 ## Files in Repository
-- `scan_results.txt` → Nmap plain-text output  
-- `scan_full_nse.txt` → Full NSE output (optional reference)  
-- `packet_capture.pcap` → tcpdump/Wireshark capture of Nmap scan  
-- `screenshots/` → Optional visual evidence  
-
-## Skills Demonstrated
-- Network reconnaissance & IP range discovery  
-- TCP SYN scanning & service detection  
-- NSE script usage  
-- Packet capture & analysis (Wireshark/tcpdump)  
-- Understanding security risks of open ports and exposed services  
-
+- scan_results.txt → Nmap plain-text output
+- scan_full_nse.txt → Full NSE script output (optional reference)
+- packet_capture.pcap → Captured network traffic
+- screenshots/ → Visual evidence (Wireshark streams, Nmap outputs)
