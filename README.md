@@ -33,7 +33,7 @@ $ sudo nmap -sS -sV 10.0.2.4 -oN scan_results.txt <br/>
 This file is included in the repository for review
 
 5. To gather extra information, I ran Nmap default NSE scripts: <br/>
-$ sudo nmap -sS -sV --script=default 10.0.2.4 <br/>
+$ sudo nmap -sS -sV --script=default 10.0.2.4 -oN scan_nse.txt <br/>
 - FTP allows anonymous login <br/>
 - Samba exposes OS info and security mode <br/>
 - HTTP server headers detected <br/>
