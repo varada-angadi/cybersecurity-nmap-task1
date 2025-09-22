@@ -85,6 +85,6 @@ Security Implication: <br/>
 
 ## Files in Repository
 - scan_results.txt → Nmap plain-text output
-- scan_full_nse.txt → Full NSE script output (optional reference)
+- scan_full_nse.txt → Full NSE script output 
 - packet_capture.pcap → Captured network traffic
-- screenshots/ → Visual evidence (Wireshark streams, Nmap outputs)
+- Task1_screenshot.pdf → Wireshark streams, Nmap outputs
