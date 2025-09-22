@@ -44,13 +44,13 @@ $ sudo tcpdump -i eth0 -w packet_capture.pcap <br/>
 Analysis with Wireshark, Opened the capture and follow TCP streams for services like FTP <br/>
 
 Observations: <br/>
-Credentials are sent in plain text → easy for an attacker to sniff <br/>
-Commands like SYST and STAT reveal system type and server status <br/>
-Confirms that FTP service is live and accessible from the network <br/>
+- Credentials are sent in plain text → easy for an attacker to sniff <br/>
+- Commands like SYST and STAT reveal system type and server status <br/>
+- Confirms that FTP service is live and accessible from the network <br/>
 
 Security Implication: <br/>
-FTP without encryption exposes sensitive information <br/>
-Real networks should use SFTP or FTPS to protect credentials <br/>
+- FTP without encryption exposes sensitive information <br/>
+- Real networks should use SFTP or FTPS to protect credentials <br/>
 
 ## Some of the important findings
 | Port | Service | Notes |
